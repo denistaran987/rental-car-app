@@ -6,16 +6,12 @@
 }
 
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: var(--font-family-main);
   font-size: 16px;
   font-weight: 500;
   line-height: 1.25;
   color: var(--color-main);
   background-color: var(--color-white);
-  max-width: 100%;
   min-height: 100vh;
 }
 
