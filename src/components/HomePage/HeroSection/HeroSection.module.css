@@ -47,3 +47,9 @@
   height: var(--button-height);
   background-color: var(--button);
 }
+
+@media (hover: hover) {
+  .link:hover {
+    background-color: var(--button-hover);
+  }
+}
