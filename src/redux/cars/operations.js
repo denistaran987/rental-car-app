@@ -19,17 +19,15 @@ export const fetchCarsBrand = createAsyncThunk(
   }
 );
 
-export const fetchCarsList = createAsyncThunk(
+export const fetchCarsData = createAsyncThunk(
   'cars/list',
-  async (_, { rejectWithValue }) => {
+  async (page = '1', { rejectWithValue }) => {
     try {
-      const res = await axios.get('/cars');
+      const res = await axios.get('/cars', {
+        params: { page, limit: 12 },
+      });
       return res.data;
     } catch (err) {
-      if (!err.response) {
-        return rejectWithValue('Something went wrong. Please try again later.');
-      }
-
       return rejectWithValue(err.response?.data?.message || err.message);
     }
   }

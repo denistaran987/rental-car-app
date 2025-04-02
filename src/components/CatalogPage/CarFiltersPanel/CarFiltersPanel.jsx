@@ -3,10 +3,7 @@ import { useState } from 'react';
 import s from './CarFiltersPanel.module.css';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import {
-  selectCarsBrand,
-  selectCarsPriceList,
-} from '../../../redux/cars/selectors';
+import { selectCarsInfo } from '../../../redux/cars/selectors';
 
 const { Option } = Select;
 
@@ -14,8 +11,7 @@ const CarFiltersPanel = () => {
   const [form] = Form.useForm();
   const [openBrand, setOpenBrand] = useState(false);
   const [openPrice, setOpenPrice] = useState(false);
-  const carsBrandList = useSelector(selectCarsBrand);
-  const carsPriceList = useSelector(selectCarsPriceList);
+  const { carsBrandList, carsPriceList } = useSelector(selectCarsInfo);
 
   const handleSubmit = async values => {
     try {

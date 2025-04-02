@@ -1,45 +1,64 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { fetchCarsBrand, fetchCarsList } from './operations';
+import { fetchCarsBrand, fetchCarsData } from './operations';
 
 const initialState = {
-  carsList: null,
-  carsBrandList: null,
-  carsPriceList: null,
+  carsInfo: {
+    carsList: [],
+    carsBrandList: [],
+    carsPriceList: [],
+  },
+  totalCars: '',
+  page: '1',
+  totalPages: '',
   isLoading: false,
 };
 
 export const slice = createSlice({
   name: 'cars',
   initialState,
+  reducers: {
+    nextPage: (state, action) => {
+      state.page = action.payload;
+    },
+    resetCarsState: () => initialState,
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchCarsBrand.fulfilled, (state, { payload }) => {
-        state.carsBrandList = payload;
+        state.carsInfo.carsBrandList = payload;
         state.isLoading = false;
       })
-      .addCase(fetchCarsList.fulfilled, (state, { payload }) => {
+      .addCase(fetchCarsData.fulfilled, (state, { payload }) => {
         const { cars } = payload;
         const uniqueRentalPrices = [
-          ...new Set(cars.map(car => car.rentalPrice)),
+          ...new Set([
+            ...state.carsInfo.carsPriceList,
+            ...cars.map(car => car.rentalPrice),
+          ]),
         ].sort((a, b) => a - b);
 
-        state.carsPriceList = uniqueRentalPrices;
-        state.carsList = payload.cars;
+        state.carsInfo.carsPriceList = uniqueRentalPrices;
+        state.carsInfo.carsList = [...state.carsInfo.carsList, ...cars];
+        state.totalCars = payload.totalCars;
+        state.page = payload.page;
+        state.totalPages = payload.totalPages;
         state.isLoading = false;
       })
       .addMatcher(
-        isAnyOf(fetchCarsBrand.pending, fetchCarsList.pending),
+        isAnyOf(fetchCarsBrand.pending, fetchCarsData.pending),
         state => {
           state.isLoading = true;
         }
       )
       .addMatcher(
-        isAnyOf(fetchCarsBrand.rejected, fetchCarsList.rejected),
+        isAnyOf(fetchCarsBrand.rejected, fetchCarsData.rejected),
         state => {
           state.isLoading = false;
         }
       );
   },
 });
+
+export const { nextPage, resetCarsState } = slice.actions;
 
 export default slice.reducer;

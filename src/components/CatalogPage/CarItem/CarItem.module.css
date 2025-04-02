@@ -1,0 +1,94 @@
+.item {
+  margin-bottom: 28px;
+}
+
+.image-container {
+  position: relative;
+}
+
+.image {
+  height: 268px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.title-container {
+  display: flex;
+  align-items: end;
+  margin-bottom: 8px;
+}
+
+.car-info {
+  display: grid;
+}
+
+.model {
+  color: var(--button);
+}
+
+.title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--main);
+}
+
+.rentalPrice {
+  margin-left: auto;
+}
+
+.info-list {
+  display: flex;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33333;
+  color: var(--gray);
+}
+
+.field {
+  display: none;
+}
+
+.link {
+  display: block;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--white);
+  background-color: var(--button);
+  border-radius: 12px;
+  padding: 12px 97px;
+  width: 276px;
+  height: 44px;
+}
+
+.link:hover {
+  background-color: var(--button-hover);
+}
+
+.icon {
+  fill: none;
+  stroke: var(--badges);
+  stroke-width: 2;
+  transition: fill 0.5s ease, stroke 0.5s ease;
+}
+
+.checkbox-label {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  fill: var(--button-hover);
+  stroke: none;
+}
+
+.checked {
+  fill: var(--button-hover);
+  stroke: none;
+}

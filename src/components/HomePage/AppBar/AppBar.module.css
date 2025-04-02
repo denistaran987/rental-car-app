@@ -5,6 +5,7 @@
   width: 100%;
   padding-block: 26px;
   background-color: var(--badges);
+  z-index: 100;
 }
 
 .header-container {
