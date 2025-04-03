@@ -1,0 +1,14 @@
+.title {
+  margin-bottom: 20px;
+}
+
+.list {
+  display: grid;
+  row-gap: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}

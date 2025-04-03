@@ -8,6 +8,7 @@ const CarItem = ({ car }) => {
   const handleToggle = () => {
     setChecked(prev => !prev);
   };
+
   return (
     <>
       <article className={s.item}>
@@ -55,7 +56,7 @@ const CarItem = ({ car }) => {
           </ul>
         </div>
       </article>
-      <Link className={s.link} to={`/catalog/${car.id}`}>
+      <Link className={s.link} to={`/catalog/${car.id}`} car={car}>
         Read More
       </Link>{' '}
     </>

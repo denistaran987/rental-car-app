@@ -1,31 +1,66 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Select, Input } from 'antd';
 import s from './CarFiltersPanel.module.css';
 import clsx from 'clsx';
-import { selectCarsInfo, selectIsLoading } from '../../../redux/cars/selectors';
+import {
+  selectCarsFilters,
+  selectCarsInfo,
+  selectIsLoading,
+} from '../../../redux/cars/selectors';
 import { fetchCarsBrand, fetchCarsData } from '../../../redux/cars/operations';
 import { resetCarsState, setFilters } from '../../../redux/cars/slice';
 import { ClipLoader } from 'react-spinners';
+import { useSearchParams } from 'react-router-dom';
 
 const { Option } = Select;
 
 const CarFiltersPanel = () => {
   const [form] = Form.useForm();
-  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [openBrand, setOpenBrand] = useState(false);
   const [openPrice, setOpenPrice] = useState(false);
+  const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const { carsBrandList } = useSelector(selectCarsInfo);
+  const currentFilters = useSelector(selectCarsFilters);
   const carsPriceList = [30, 40, 50, 60, 70, 80];
+
+  useEffect(() => {
+    const initialValues = {
+      brand: searchParams.get('brand') || currentFilters.brand || undefined,
+      rentalPrice:
+        searchParams.get('rentalPrice') ||
+        currentFilters.rentalPrice ||
+        undefined,
+      minMileage:
+        searchParams.get('minMileage') ||
+        currentFilters.minMileage ||
+        undefined,
+      maxMileage:
+        searchParams.get('maxMileage') ||
+        currentFilters.maxMileage ||
+        undefined,
+    };
+    form.setFieldsValue(initialValues);
+  }, [form, currentFilters, searchParams]);
 
   const handleSubmit = values => {
     try {
+      const newSearchParams = new URLSearchParams();
+      if (values.brand) newSearchParams.set('brand', values.brand);
+      if (values.rentalPrice)
+        newSearchParams.set('rentalPrice', values.rentalPrice);
+      if (values.minMileage)
+        newSearchParams.set('minMileage', values.minMileage);
+      if (values.maxMileage)
+        newSearchParams.set('maxMileage', values.maxMileage);
+      setSearchParams(newSearchParams);
+
       dispatch(resetCarsState());
       dispatch(fetchCarsBrand());
       dispatch(setFilters(values));
       dispatch(fetchCarsData({ page: '1', filters: values }));
-      form.resetFields();
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +79,7 @@ const CarFiltersPanel = () => {
           <Select
             placeholder="Choose a brand"
             style={{ width: 204, height: 44 }}
+            allowClear
             className={s.customLabel}
             open={openBrand}
             onDropdownVisibleChange={visible => setOpenBrand(visible)}
@@ -66,6 +102,7 @@ const CarFiltersPanel = () => {
           <Select
             placeholder="Choose a price"
             style={{ width: 204, height: 44 }}
+            allowClear
             open={openPrice}
             onDropdownVisibleChange={visible => setOpenPrice(visible)}
             suffixIcon={
@@ -89,22 +126,20 @@ const CarFiltersPanel = () => {
             style={{ display: 'flex' }}
             rules={[{ pattern: /^[0-9]+$/, message: 'Enter a valid number' }]}
           >
-            <Input
-              type="text"
-              className={clsx(s.field, s['field_from'])}
-              placeholder="From"
-            />
+            <div className={s['input-wrapper']}>
+              <span className={s['input-prefix']}>From</span>
+              <Input type="text" className={clsx(s.field, s['field_from'])} />
+            </div>
           </Form.Item>
           <Form.Item
             name="maxMileage"
             style={{ display: 'flex' }}
             rules={[{ pattern: /^[0-9]+$/, message: 'Enter a valid number' }]}
           >
-            <Input
-              type="text"
-              className={clsx(s.field, s['field_to'])}
-              placeholder="To"
-            />
+            <div className={s['input-wrapper']}>
+              <span className={s['input-prefix']}>To</span>{' '}
+              <Input type="text" className={clsx(s.field, s['field_to'])} />
+            </div>
           </Form.Item>
         </div>
 

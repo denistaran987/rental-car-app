@@ -19,23 +19,9 @@ export const fetchCarsBrand = createAsyncThunk(
   }
 );
 
-// export const fetchCarsData = createAsyncThunk(
-//   'cars/list',
-//   async (page = '1', { rejectWithValue }) => {
-//     try {
-//       const res = await axios.get('/cars', {
-//         params: { page, limit: 12 },
-//       });
-//       return res.data;
-//     } catch (err) {
-//       return rejectWithValue(err.response?.data?.message || err.message);
-//     }
-//   }
-// );
-
 export const fetchCarsData = createAsyncThunk(
   'cars/list',
-  async ({ page = '1', filters = {} }, thunkAPI) => {
+  async ({ page = '1', filters = {} }, { rejectWithValue }) => {
     try {
       const params = {
         page,
@@ -45,22 +31,26 @@ export const fetchCarsData = createAsyncThunk(
 
       const res = await axios.get('/cars', { params });
       return res.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+    } catch (err) {
+      if (!err.response) {
+        return rejectWithValue('Something went wrong. Please try again later.');
+      }
+      return rejectWithValue(err.message);
     }
   }
 );
 
-// export const fetchFilteredCars = createAsyncThunk(
-//   'cars/filter',
-//   async (filters, { rejectWithValue }) => {
-//     try {
-//       const res = await axios.get('/cars', {
-//         params: { limit: 12, ...filters },
-//       });
-//       return res.data;
-//     } catch (err) {
-//       return rejectWithValue(err.response?.data?.message || err.message);
-//     }
-//   }
-// );
+export const fetchCarById = createAsyncThunk(
+  'cars/id',
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`/cars/${id}`);
+      return res.data;
+    } catch (err) {
+      if (!err.response) {
+        return rejectWithValue('Something went wrong. Please try again later.');
+      }
+      return rejectWithValue(err.response?.data?.message || err.message);
+    }
+  }
+);

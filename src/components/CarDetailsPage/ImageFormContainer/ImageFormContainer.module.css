@@ -1,0 +1,17 @@
+.imageform-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.image {
+  width: 640px;
+  border-radius: 20px;
+}

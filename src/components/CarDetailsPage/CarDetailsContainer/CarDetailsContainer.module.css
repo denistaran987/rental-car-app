@@ -1,0 +1,8 @@
+.cardetails-container {
+  display: flex;
+  flex-direction: column;
+
+  @media (width < 1200px) {
+    font-size: 14px;
+  }
+}

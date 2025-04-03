@@ -1,0 +1,45 @@
+:global(.ant-input-status-error) {
+  box-shadow: 0 0 2px 0 red !important;
+}
+
+.form-wrapper {
+  padding: 32px;
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.description {
+  color: var(--gray);
+  margin-bottom: 24px;
+}
+
+.button {
+  display: block;
+  font-weight: 600;
+  width: 156px;
+  height: 44px;
+  margin-inline: auto;
+  color: var(--white);
+  background-color: var(--button);
+  border-radius: 12px;
+  padding: 12px 58px;
+}
+
+@media (hover: hover) {
+  .button:hover {
+    background-color: var(--button-hover);
+  }
+}
+
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

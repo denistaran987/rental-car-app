@@ -1,8 +1,9 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { fetchCarsBrand, fetchCarsData } from './operations';
+import { fetchCarById, fetchCarsBrand, fetchCarsData } from './operations';
 
 const initialState = {
   carsInfo: {
+    carInfo: {},
     carsList: [],
     carsBrandList: [],
   },
@@ -36,14 +37,26 @@ export const slice = createSlice({
         state.totalPages = payload.totalPages;
         state.isLoading = false;
       })
+      .addCase(fetchCarById.fulfilled, (state, { payload }) => {
+        state.carsInfo.carInfo = payload;
+        state.isLoading = false;
+      })
       .addMatcher(
-        isAnyOf(fetchCarsBrand.pending, fetchCarsData.pending),
+        isAnyOf(
+          fetchCarsBrand.pending,
+          fetchCarsData.pending,
+          fetchCarById.fulfilled
+        ),
         state => {
           state.isLoading = true;
         }
       )
       .addMatcher(
-        isAnyOf(fetchCarsBrand.rejected, fetchCarsData.rejected),
+        isAnyOf(
+          fetchCarsBrand.rejected,
+          fetchCarsData.rejected,
+          fetchCarById.fulfilled
+        ),
         state => {
           state.isLoading = false;
         }

@@ -1,0 +1,45 @@
+.maininfo-container {
+  margin-bottom: 68px;
+}
+
+.maininfo {
+  margin-bottom: 8px;
+}
+
+.title,
+.year {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--main);
+}
+
+.id {
+  color: var(--gray);
+  margin-left: 16px;
+}
+
+.location {
+  display: flex;
+  column-gap: 4px;
+  margin-bottom: 16px;
+}
+
+.mileage {
+  margin-left: 16px;
+}
+
+.rentalPrice {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--button);
+  margin-bottom: 32px;
+}
+
+.description {
+  color: var(--main);
+  max-width: 488px;
+}

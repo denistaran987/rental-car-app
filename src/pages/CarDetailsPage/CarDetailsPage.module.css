@@ -1,0 +1,14 @@
+.section {
+  padding-top: 152px;
+  padding-bottom: 104px;
+}
+
+.details-container {
+  display: flex;
+  column-gap: 72px;
+
+  @media (width < 768px) {
+    flex-direction: column;
+    row-gap: 60px;
+  }
+}

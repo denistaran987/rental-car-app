@@ -50,6 +50,11 @@ svg {
 }
 
 .field {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--main);
   width: 160px;
   height: 44px;
   background-color: var(--inputs);
@@ -68,10 +73,34 @@ svg {
   background-color: #fafafa;
 }
 
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-prefix {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--main);
+  transform: translateY(-50%);
+  z-index: 50;
+}
+
+.custom-input {
+  width: 100%;
+}
+
 .field_from {
+  position: relative;
   border-right: 1px solid var(--gray-light);
   border-radius: 12px 0 0 12px;
-  padding: 12px 24px;
+  padding: 12px 12px 12px 56px;
 }
 
 .field_from:hover {
@@ -84,6 +113,7 @@ svg {
 
 .field_to {
   border-radius: 0 12px 12px 0;
+  padding: 12px 12px 12px 34px;
 }
 
 .button {
