@@ -5,8 +5,8 @@ const initialState = {
   carsInfo: {
     carsList: [],
     carsBrandList: [],
-    carsPriceList: [],
   },
+  filters: {},
   totalCars: '',
   page: '1',
   totalPages: '',
@@ -17,10 +17,10 @@ export const slice = createSlice({
   name: 'cars',
   initialState,
   reducers: {
-    nextPage: (state, action) => {
-      state.page = action.payload;
-    },
     resetCarsState: () => initialState,
+    setFilters: (state, action) => {
+      state.filters = { ...state.filters, ...action.payload };
+    },
   },
   extraReducers: builder => {
     builder
@@ -30,14 +30,6 @@ export const slice = createSlice({
       })
       .addCase(fetchCarsData.fulfilled, (state, { payload }) => {
         const { cars } = payload;
-        const uniqueRentalPrices = [
-          ...new Set([
-            ...state.carsInfo.carsPriceList,
-            ...cars.map(car => car.rentalPrice),
-          ]),
-        ].sort((a, b) => a - b);
-
-        state.carsInfo.carsPriceList = uniqueRentalPrices;
         state.carsInfo.carsList = [...state.carsInfo.carsList, ...cars];
         state.totalCars = payload.totalCars;
         state.page = payload.page;
@@ -59,6 +51,6 @@ export const slice = createSlice({
   },
 });
 
-export const { nextPage, resetCarsState } = slice.actions;
+export const { setFilters, resetCarsState } = slice.actions;
 
 export default slice.reducer;

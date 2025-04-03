@@ -1,10 +1,14 @@
 .list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(276px, 1fr));
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   column-gap: 32px;
   row-gap: 48px;
-  justify-content: center;
   margin-bottom: 80px;
+}
+
+.item {
+  width: calc((100% - 96px) / 4);
 }
 
 .button {
@@ -19,4 +23,16 @@
   padding: 12px 37px;
   width: 156px;
   height: var(--button-height);
+}
+
+.button:hover,
+.button:focus {
+  background-color: var(--button);
+  color: var(--white);
+}
+
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

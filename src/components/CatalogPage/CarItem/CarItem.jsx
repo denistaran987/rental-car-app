@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const CarItem = ({ car }) => {
   const [checked, setChecked] = useState(false);
-  const id = 12; /* delete */
 
   const handleToggle = () => {
     setChecked(prev => !prev);
@@ -56,7 +55,7 @@ const CarItem = ({ car }) => {
           </ul>
         </div>
       </article>
-      <Link className={s.link} to={`catalog/:${id}`}>
+      <Link className={s.link} to={`/catalog/${car.id}`}>
         Read More
       </Link>{' '}
     </>

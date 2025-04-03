@@ -57,6 +57,7 @@
   font-weight: 600;
   font-size: 16px;
   line-height: 1.25;
+  margin-inline: auto;
   color: var(--white);
   background-color: var(--button);
   border-radius: 12px;

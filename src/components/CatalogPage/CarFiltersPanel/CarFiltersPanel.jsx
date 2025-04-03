@@ -1,21 +1,30 @@
-import { Form, Select, Input } from 'antd';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, Select, Input } from 'antd';
 import s from './CarFiltersPanel.module.css';
 import clsx from 'clsx';
-import { useSelector } from 'react-redux';
-import { selectCarsInfo } from '../../../redux/cars/selectors';
+import { selectCarsInfo, selectIsLoading } from '../../../redux/cars/selectors';
+import { fetchCarsBrand, fetchCarsData } from '../../../redux/cars/operations';
+import { resetCarsState, setFilters } from '../../../redux/cars/slice';
+import { ClipLoader } from 'react-spinners';
 
 const { Option } = Select;
 
 const CarFiltersPanel = () => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
   const [openBrand, setOpenBrand] = useState(false);
   const [openPrice, setOpenPrice] = useState(false);
-  const { carsBrandList, carsPriceList } = useSelector(selectCarsInfo);
+  const isLoading = useSelector(selectIsLoading);
+  const { carsBrandList } = useSelector(selectCarsInfo);
+  const carsPriceList = [30, 40, 50, 60, 70, 80];
 
-  const handleSubmit = async values => {
+  const handleSubmit = values => {
     try {
-      console.log(values);
+      dispatch(resetCarsState());
+      dispatch(fetchCarsBrand());
+      dispatch(setFilters(values));
+      dispatch(fetchCarsData({ page: '1', filters: values }));
       form.resetFields();
     } catch (error) {
       console.log(error);
@@ -53,7 +62,7 @@ const CarFiltersPanel = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item name="price" label="Price/ 1 hour">
+        <Form.Item name="rentalPrice" label="Price/ 1 hour">
           <Select
             placeholder="Choose a price"
             style={{ width: 204, height: 44 }}
@@ -75,7 +84,7 @@ const CarFiltersPanel = () => {
         </Form.Item>
         <div className={s['input-container']}>
           <Form.Item
-            name="from"
+            name="minMileage"
             label="Сar mileage / km"
             style={{ display: 'flex' }}
             rules={[{ pattern: /^[0-9]+$/, message: 'Enter a valid number' }]}
@@ -87,7 +96,7 @@ const CarFiltersPanel = () => {
             />
           </Form.Item>
           <Form.Item
-            name="to"
+            name="maxMileage"
             style={{ display: 'flex' }}
             rules={[{ pattern: /^[0-9]+$/, message: 'Enter a valid number' }]}
           >
@@ -101,7 +110,13 @@ const CarFiltersPanel = () => {
 
         <Form.Item>
           <button className={s.button} type="submit">
-            Search
+            {isLoading ? (
+              <div className={s.loaderWrapper}>
+                <ClipLoader size={20} color="#fff" />
+              </div>
+            ) : (
+              'Search'
+            )}{' '}
           </button>
         </Form.Item>
       </Form>
