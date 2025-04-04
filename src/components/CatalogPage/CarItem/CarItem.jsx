@@ -1,12 +1,16 @@
-import { useState } from 'react';
 import s from './CarItem.module.css';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectSelectedCars } from '../../../redux/cars/selectors';
+import { toggleFavorite } from '../../../redux/cars/slice';
 
 const CarItem = ({ car }) => {
-  const [checked, setChecked] = useState(false);
+  const dispatch = useDispatch();
+  const selectedCars = useSelector(selectSelectedCars);
+  const checked = selectedCars.includes(car.id);
 
   const handleToggle = () => {
-    setChecked(prev => !prev);
+    dispatch(toggleFavorite(car.id));
   };
 
   return (

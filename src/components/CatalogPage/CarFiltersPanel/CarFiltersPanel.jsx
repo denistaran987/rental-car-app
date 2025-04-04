@@ -8,7 +8,7 @@ import {
   selectCarsInfo,
   selectIsLoading,
 } from '../../../redux/cars/selectors';
-import { fetchCarsBrand, fetchCarsData } from '../../../redux/cars/operations';
+import { fetchCarsData } from '../../../redux/cars/operations';
 import { resetCarsState, setFilters } from '../../../redux/cars/slice';
 import { ClipLoader } from 'react-spinners';
 import { useSearchParams } from 'react-router-dom';
@@ -58,7 +58,6 @@ const CarFiltersPanel = () => {
       setSearchParams(newSearchParams);
 
       dispatch(resetCarsState());
-      dispatch(fetchCarsBrand());
       dispatch(setFilters(values));
       dispatch(fetchCarsData({ page: '1', filters: values }));
     } catch (error) {
@@ -75,7 +74,7 @@ const CarFiltersPanel = () => {
         onFinish={handleSubmit}
         layout="vertical"
       >
-        <Form.Item name="brand" label="car brand" className={s.customLabel}>
+        <Form.Item name="brand" label="Car brand" className={s.customLabel}>
           <Select
             placeholder="Choose a brand"
             style={{ width: 204, height: 44 }}
@@ -124,21 +123,24 @@ const CarFiltersPanel = () => {
             name="minMileage"
             label="Сar mileage / km"
             style={{ display: 'flex' }}
-            rules={[{ pattern: /^[0-9]+$/, message: 'Enter a valid number' }]}
           >
             <div className={s['input-wrapper']}>
               <span className={s['input-prefix']}>From</span>
-              <Input type="text" className={clsx(s.field, s['field_from'])} />
+              <Input
+                type="number"
+                min={0}
+                className={clsx(s.field, s['field_from'])}
+              />
             </div>
           </Form.Item>
-          <Form.Item
-            name="maxMileage"
-            style={{ display: 'flex' }}
-            rules={[{ pattern: /^[0-9]+$/, message: 'Enter a valid number' }]}
-          >
+          <Form.Item name="maxMileage" style={{ display: 'flex' }}>
             <div className={s['input-wrapper']}>
               <span className={s['input-prefix']}>To</span>{' '}
-              <Input type="text" className={clsx(s.field, s['field_to'])} />
+              <Input
+                type="number"
+                min={0}
+                className={clsx(s.field, s['field_to'])}
+              />
             </div>
           </Form.Item>
         </div>

@@ -74,7 +74,7 @@
   fill: none;
   stroke: var(--badges);
   stroke-width: 2;
-  transition: fill 0.5s ease, stroke 0.5s ease;
+  transition: none;
 }
 
 .checkbox-label {
@@ -85,8 +85,11 @@
 }
 
 .icon:hover {
-  fill: var(--button-hover);
-  stroke: none;
+  stroke: var(--button-hover);
+}
+
+.icon:active {
+  transform: scale(1.15);
 }
 
 .checked {

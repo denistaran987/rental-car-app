@@ -4,7 +4,6 @@ import { selectCarInfo } from '../../../../redux/cars/selectors';
 
 const MainCarInfo = () => {
   const carInfo = useSelector(selectCarInfo);
-  console.log(carInfo);
   const formattedCarInfoId = carInfo.id && carInfo.id.slice(0, 4);
   const formattedAddress =
     carInfo.address && carInfo.address.split(' ').slice(3).join(' ');
