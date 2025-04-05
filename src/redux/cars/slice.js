@@ -39,9 +39,6 @@ export const slice = createSlice({
         JSON.stringify(state.carsInfo.selectedCars)
       );
     },
-    setSelectedCars: (state, action) => {
-      state.carsInfo.selectedCars = action.payload;
-    },
   },
   extraReducers: builder => {
     builder
@@ -51,7 +48,10 @@ export const slice = createSlice({
       })
       .addCase(fetchCarsData.fulfilled, (state, { payload }) => {
         const { cars } = payload;
-        state.carsInfo.carsList = [...state.carsInfo.carsList, ...cars];
+        state.carsInfo.carsList =
+          Number(payload.page) === 1
+            ? cars
+            : [...state.carsInfo.carsList, ...cars];
         state.totalCars = payload.totalCars;
         state.page = payload.page;
         state.totalPages = payload.totalPages;
@@ -84,7 +84,6 @@ export const slice = createSlice({
   },
 });
 
-export const { setFilters, resetCarsState, setSelectedCars, toggleFavorite } =
-  slice.actions;
+export const { setFilters, resetCarsState, toggleFavorite } = slice.actions;
 
 export default slice.reducer;

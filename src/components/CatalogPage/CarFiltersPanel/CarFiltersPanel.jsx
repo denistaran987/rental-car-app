@@ -25,6 +25,8 @@ const CarFiltersPanel = () => {
   const { carsBrandList } = useSelector(selectCarsInfo);
   const currentFilters = useSelector(selectCarsFilters);
   const carsPriceList = [30, 40, 50, 60, 70, 80];
+  const [minMileage, setMinMileage] = useState('');
+  const [maxMileage, setMaxMileage] = useState('');
 
   useEffect(() => {
     const initialValues = {
@@ -46,15 +48,12 @@ const CarFiltersPanel = () => {
   }, [form, currentFilters, searchParams]);
 
   const handleSubmit = values => {
+    console.log(values);
     try {
       const newSearchParams = new URLSearchParams();
-      if (values.brand) newSearchParams.set('brand', values.brand);
-      if (values.rentalPrice)
-        newSearchParams.set('rentalPrice', values.rentalPrice);
-      if (values.minMileage)
-        newSearchParams.set('minMileage', values.minMileage);
-      if (values.maxMileage)
-        newSearchParams.set('maxMileage', values.maxMileage);
+      Object.entries(values).forEach(([key, value]) => {
+        if (value) newSearchParams.set(key, value);
+      });
       setSearchParams(newSearchParams);
 
       dispatch(resetCarsState());
@@ -118,6 +117,7 @@ const CarFiltersPanel = () => {
               ))}
           </Select>
         </Form.Item>
+
         <div className={s['input-container']}>
           <Form.Item
             name="minMileage"
@@ -127,9 +127,21 @@ const CarFiltersPanel = () => {
             <div className={s['input-wrapper']}>
               <span className={s['input-prefix']}>From</span>
               <Input
-                type="number"
+                type="text"
                 min={0}
                 className={clsx(s.field, s['field_from'])}
+                value={minMileage}
+                onChange={e => {
+                  const raw = e.target.value.replace(/,/g, '');
+                  if (raw === '') {
+                    setMinMileage(''); // Якщо порожній рядок, очищаємо значення
+                    form.setFieldsValue({ minMileage: '' });
+                    return;
+                  }
+                  if (!isNaN(raw)) {
+                    setMinMileage(Number(raw).toLocaleString());
+                  }
+                }}
               />
             </div>
           </Form.Item>
@@ -137,9 +149,21 @@ const CarFiltersPanel = () => {
             <div className={s['input-wrapper']}>
               <span className={s['input-prefix']}>To</span>{' '}
               <Input
-                type="number"
+                type="text"
                 min={0}
                 className={clsx(s.field, s['field_to'])}
+                value={maxMileage}
+                onChange={e => {
+                  const raw = e.target.value.replace(/,/g, '');
+                  if (raw === '') {
+                    setMaxMileage('');
+                    form.setFieldsValue({ maxMileage: '' });
+                    return;
+                  }
+                  if (!isNaN(raw)) {
+                    setMaxMileage(Number(raw).toLocaleString());
+                  }
+                }}
               />
             </div>
           </Form.Item>

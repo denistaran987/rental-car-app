@@ -12,25 +12,25 @@ const CarSpecifications = () => {
       <ul className={s.list}>
         <li className={s.item}>
           <svg width="16" height="16">
-            <use href="/public/icons.svg#icon-calendar"></use>
+            <use href="/icons.svg#icon-calendar"></use>
           </svg>
           Year: {year}
         </li>
         <li className={s.item}>
           <svg width="16" height="16">
-            <use href="/public/icons.svg#icon-car"></use>
+            <use href="/icons.svg#icon-car"></use>
           </svg>
           Type: {type}
         </li>
         <li className={s.item}>
           <svg width="16" height="16">
-            <use href="/public/icons.svg#icon-fuel_pump"></use>
+            <use href="/icons.svg#icon-fuel_pump"></use>
           </svg>
           Fuel Consumption: {fuelConsumption}
         </li>
         <li className={s.item}>
           <svg width="16" height="16">
-            <use href="/public/icons.svg#icon-gear"></use>
+            <use href="/icons.svg#icon-gear"></use>
           </svg>
           Engine Size: {engineSize}
         </li>

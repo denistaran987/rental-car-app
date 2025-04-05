@@ -12,8 +12,6 @@ import CarItem from '../CarItem/CarItem';
 import Loader from '../../Loader/Loader';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { fetchCarsData } from '../../../redux/cars/operations';
-import { useEffect } from 'react';
-import { resetCarsState } from '../../../redux/cars/slice';
 import { ClipLoader } from 'react-spinners';
 
 const CarsList = () => {
@@ -38,11 +36,6 @@ const CarsList = () => {
 
     return parseFloat(a.rentalPrice) - parseFloat(b.rentalPrice);
   });
-
-  useEffect(() => {
-    dispatch(resetCarsState());
-    dispatch(fetchCarsData({ page: '1', filters: {} }));
-  }, [dispatch]);
 
   const handleCLick = () => {
     dispatch(fetchCarsData({ page: String(+page + 1), filters }));

@@ -5,6 +5,8 @@ import { DatePicker, Form, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { ClipLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
+import localeData from '../../../../../local.json';
+import moment from 'moment';
 
 const RentalForm = () => {
   const [form] = Form.useForm();
@@ -84,6 +86,10 @@ const RentalForm = () => {
               backgroundColor: '#F7F7F7',
               height: 48,
               borderRadius: 'none',
+            }}
+            locale={localeData}
+            disabledDate={current => {
+              return current && current < moment().endOf('day');
             }}
           />
         </Form.Item>
