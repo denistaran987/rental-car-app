@@ -60,7 +60,7 @@ const CarItem = ({ car }) => {
           </ul>
         </div>
       </article>
-      <Link className={s.link} to={`/catalog/${car.id}`} car={car}>
+      <Link className={s.link} to={`/catalog/${car.id}`}>
         Read More
       </Link>{' '}
     </>

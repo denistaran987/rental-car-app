@@ -77,7 +77,10 @@ const RentalForm = () => {
           />
         </Form.Item>
 
-        <Form.Item name="date">
+        <Form.Item
+          name="date"
+          rules={[{ required: true, message: 'Date is required!' }]}
+        >
           <DatePicker
             placeholder="Booking date"
             suffixIcon={null}

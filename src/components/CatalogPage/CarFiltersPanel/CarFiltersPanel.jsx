@@ -48,7 +48,6 @@ const CarFiltersPanel = () => {
   }, [form, currentFilters, searchParams]);
 
   const handleSubmit = values => {
-    console.log(values);
     try {
       const newSearchParams = new URLSearchParams();
       Object.entries(values).forEach(([key, value]) => {
@@ -119,11 +118,7 @@ const CarFiltersPanel = () => {
         </Form.Item>
 
         <div className={s['input-container']}>
-          <Form.Item
-            name="minMileage"
-            label="Сar mileage / km"
-            style={{ display: 'flex' }}
-          >
+          <Form.Item name="minMileage" label="Сar mileage / km">
             <div className={s['input-wrapper']}>
               <span className={s['input-prefix']}>From</span>
               <Input
@@ -134,7 +129,7 @@ const CarFiltersPanel = () => {
                 onChange={e => {
                   const raw = e.target.value.replace(/,/g, '');
                   if (raw === '') {
-                    setMinMileage(''); // Якщо порожній рядок, очищаємо значення
+                    setMinMileage('');
                     form.setFieldsValue({ minMileage: '' });
                     return;
                   }

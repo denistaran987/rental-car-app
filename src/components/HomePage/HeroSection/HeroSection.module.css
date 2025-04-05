@@ -29,6 +29,10 @@
   font-size: 60px;
   line-height: 1.2;
   text-align: center;
+
+  @media (width < 768px) {
+    font-size: 40px;
+  }
 }
 
 .text {
@@ -37,6 +41,10 @@
   line-height: 1.33333;
   margin-bottom: 22px;
   text-align: center;
+
+  @media (width < 768px) {
+    font-size: 18px;
+  }
 }
 
 .link {

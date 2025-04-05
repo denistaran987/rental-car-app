@@ -37,7 +37,7 @@
 :global(.ant-picker-dropdown .ant-picker-content tbody::before) {
   content: '';
   position: absolute;
-  width: calc(100% + 24px); /* Ширина на 12px більша з обох боків */
+  width: calc(100% + 24px);
   top: 0;
   left: -12px;
   right: -12px;

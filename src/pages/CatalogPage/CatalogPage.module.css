@@ -1,4 +1,14 @@
 .section {
   padding-top: 152px;
   padding-bottom: 112px;
+
+  @media (width < 1200px) {
+    padding-top: 124px;
+    padding-bottom: 64px;
+  }
+
+  @media (width < 768px) {
+    padding-top: 100px;
+    padding-bottom: 54px;
+  }
 }

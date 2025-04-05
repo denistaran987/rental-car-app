@@ -27,6 +27,10 @@
   z-index: 50;
 }
 
+:global(.ant-select-clear) {
+  width: 14px !important;
+}
+
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -44,6 +48,10 @@ input[type='number'] {
   flex-wrap: wrap;
   column-gap: 16px;
   margin-bottom: 56px;
+
+  @media (width < 768px) {
+    margin-bottom: 26px;
+  }
 }
 
 svg {
@@ -111,6 +119,10 @@ svg {
   border-right: 1px solid var(--gray-light);
   border-radius: 12px 0 0 12px;
   padding: 12px 12px 12px 56px;
+
+  @media (width < 768px) {
+    width: 144px;
+  }
 }
 
 .field_from:hover {
@@ -124,6 +136,10 @@ svg {
 .field_to {
   border-radius: 0 12px 12px 0;
   padding: 12px 12px 12px 34px;
+
+  @media (width < 768px) {
+    width: 144px;
+  }
 }
 
 .button {

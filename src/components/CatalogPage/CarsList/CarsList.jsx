@@ -10,7 +10,6 @@ import {
 import s from './CarsList.module.css';
 import CarItem from '../CarItem/CarItem';
 import Loader from '../../Loader/Loader';
-import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { fetchCarsData } from '../../../redux/cars/operations';
 import { ClipLoader } from 'react-spinners';
 
@@ -23,7 +22,7 @@ const CarsList = () => {
   const selectedCars = useSelector(selectSelectedCars);
   const dispatch = useDispatch();
 
-  const hasCars = carsList && carsList.length > 0;
+  const hasCars = carsList.length > 0;
   const showLoadMore = carsList.length > 0 && page < totalPages;
 
   const sortedCars = [...carsList].sort((a, b) => {
@@ -39,13 +38,21 @@ const CarsList = () => {
 
   const handleCLick = () => {
     dispatch(fetchCarsData({ page: String(+page + 1), filters }));
+
+    setTimeout(() => {
+      const currentScrollPosition = window.scrollY;
+      window.scrollTo({
+        top: currentScrollPosition + 440,
+        behavior: 'smooth',
+      });
+    }, 300);
   };
 
   return (
     <>
       {isLoading && <Loader />}
 
-      {!isLoading && hasCars && (
+      {hasCars && (
         <ul className={s.list}>
           {sortedCars.map(car => (
             <li className={s.item} key={car.id}>
@@ -56,7 +63,13 @@ const CarsList = () => {
       )}
 
       {!isLoading && !hasCars && (
-        <ErrorMessage message="Sorry, no cars in rental!" />
+        <img
+          className={s.image}
+          width="400"
+          height="400"
+          src="/images/cars_not_found.png"
+          alt="photo cars not found"
+        />
       )}
 
       {showLoadMore && (
