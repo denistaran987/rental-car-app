@@ -51,7 +51,6 @@ const CarsList = () => {
   return (
     <>
       {isLoading && <Loader />}
-
       {hasCars && (
         <ul className={s.list}>
           {sortedCars.map(car => (
@@ -61,7 +60,6 @@ const CarsList = () => {
           ))}
         </ul>
       )}
-
       {!isLoading && !hasCars && (
         <img
           className={s.image}
@@ -71,7 +69,6 @@ const CarsList = () => {
           alt="photo cars not found"
         />
       )}
-
       {showLoadMore && (
         <button type="button" className={s.button} onClick={handleCLick}>
           {isLoading ? (
