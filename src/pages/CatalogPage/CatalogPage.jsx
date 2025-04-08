@@ -6,14 +6,19 @@ import { fetchCarsBrand, fetchCarsData } from '../../redux/cars/operations';
 import { selectIsLoading } from '../../redux/cars/selectors';
 import CarsList from '../../components/CatalogPage/CarsList/CarsList';
 import Loader from '../../components/Loader/Loader';
+import { setFilters } from '../../redux/cars/slice';
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const paramsObj = Object.fromEntries(searchParams.entries());
+
     dispatch(fetchCarsBrand());
-    dispatch(fetchCarsData({ page: '1', filters: {} }));
+    dispatch(fetchCarsData({ page: '1', filters: paramsObj }));
+    dispatch(setFilters(paramsObj));
   }, [dispatch]);
 
   return (

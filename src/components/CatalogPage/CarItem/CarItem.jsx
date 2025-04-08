@@ -1,13 +1,13 @@
 import s from './CarItem.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSelectedCars } from '../../../redux/cars/selectors';
-import { toggleFavorite } from '../../../redux/cars/slice';
+import { toggleFavorite } from '../../../redux/favorite/slice';
+import { selectFavorites } from '../../../redux/favorite/selectors';
 
 const CarItem = ({ car }) => {
   const dispatch = useDispatch();
-  const selectedCars = useSelector(selectSelectedCars);
-  const focus = selectedCars.includes(car.id);
+  const favorites = useSelector(selectFavorites);
+  const focus = favorites.includes(car.id);
   const formattedCity = car.address
     .split(' ')
     .slice(3, 4)
@@ -18,6 +18,7 @@ const CarItem = ({ car }) => {
   const handleToggle = () => {
     dispatch(toggleFavorite(car.id));
   };
+
   return (
     <>
       <article className={s.item}>
@@ -51,9 +52,7 @@ const CarItem = ({ car }) => {
           </ul>
           <ul className={`${s['info-list']} ${s['model-list']}`}>
             <li>{car.type}</li>
-            <li>
-              {`${String(car.mileage)[0]} ${String(car.mileage).slice(1)} km`}
-            </li>
+            <li>{`${car.mileage.toLocaleString('uk-UA')} km`}</li>
           </ul>
         </div>
       </article>

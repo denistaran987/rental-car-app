@@ -45,6 +45,10 @@ const CarFiltersPanel = () => {
         undefined,
     };
 
+    if (initialValues.rentalPrice) {
+      initialValues.rentalPrice = `To $${initialValues.rentalPrice}`;
+    }
+
     setMinMileage(initialValues.minMileage || '');
     setMaxMileage(initialValues.maxMileage || '');
 
@@ -65,7 +69,7 @@ const CarFiltersPanel = () => {
 
     try {
       const newSearchParams = new URLSearchParams();
-      Object.entries(values).forEach(([key, value]) => {
+      Object.entries(formattedValues).forEach(([key, value]) => {
         if (value) newSearchParams.set(key, value);
       });
 
