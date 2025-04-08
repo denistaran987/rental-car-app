@@ -4,7 +4,6 @@ import {
   selectCarsInfo,
   selectIsLoading,
   selectPage,
-  selectSelectedCars,
   selectTotalPages,
 } from '../../../redux/cars/selectors';
 import s from './CarsList.module.css';
@@ -19,22 +18,10 @@ const CarsList = () => {
   const page = useSelector(selectPage);
   const totalPages = useSelector(selectTotalPages);
   const filters = useSelector(selectCarsFilters);
-  const selectedCars = useSelector(selectSelectedCars);
   const dispatch = useDispatch();
 
   const hasCars = carsList.length > 0;
   const showLoadMore = carsList.length > 0 && page < totalPages;
-
-  const sortedCars = [...carsList].sort((a, b) => {
-    const aChecked = selectedCars.includes(a.id);
-    const bChecked = selectedCars.includes(b.id);
-
-    if (aChecked !== bChecked) {
-      return bChecked - aChecked;
-    }
-
-    return parseFloat(a.rentalPrice) - parseFloat(b.rentalPrice);
-  });
 
   const handleCLick = () => {
     dispatch(fetchCarsData({ page: String(+page + 1), filters }));
@@ -53,7 +40,7 @@ const CarsList = () => {
       {isLoading && <Loader />}
       {hasCars && (
         <ul className={s.list}>
-          {sortedCars.map(car => (
+          {carsList.map(car => (
             <li className={s.item} key={car.id}>
               <CarItem car={car} />
             </li>
@@ -73,7 +60,7 @@ const CarsList = () => {
         <button type="button" className={s.button} onClick={handleCLick}>
           {isLoading ? (
             <div className={s.loaderWrapper}>
-              <ClipLoader size={20} color="#fff" />
+              <ClipLoader size={20} color="#0b44cd" />
             </div>
           ) : (
             'Load more'

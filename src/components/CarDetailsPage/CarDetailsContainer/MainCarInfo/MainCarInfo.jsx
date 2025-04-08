@@ -15,7 +15,8 @@ const MainCarInfo = () => {
     <div className={s['maininfo-container']}>
       <div className={s.maininfo}>
         <h2 className={s.title}>
-          {carInfo.brand}, <span className={s.year}>{carInfo.year}</span>{' '}
+          {carInfo.brand} {carInfo.model},{' '}
+          <span className={s.year}>{carInfo.year}</span>{' '}
         </h2>
         <span className={s.id}>{`id: ${formattedCarInfoId}`}</span>
       </div>

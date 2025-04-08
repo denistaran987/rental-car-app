@@ -7,12 +7,17 @@ import { toggleFavorite } from '../../../redux/cars/slice';
 const CarItem = ({ car }) => {
   const dispatch = useDispatch();
   const selectedCars = useSelector(selectSelectedCars);
-  const checked = selectedCars.includes(car.id);
+  const focus = selectedCars.includes(car.id);
+  const formattedCity = car.address
+    .split(' ')
+    .slice(3, 4)
+    .join(' ')
+    .replace(',', '');
+  const formattedCountry = car.address.split(' ').slice(4).join('');
 
   const handleToggle = () => {
     dispatch(toggleFavorite(car.id));
   };
-
   return (
     <>
       <article className={s.item}>
@@ -21,21 +26,15 @@ const CarItem = ({ car }) => {
             style={{ backgroundImage: `url(${car.img})` }}
             className={s.image}
           ></div>
-          <label className={s['checkbox-label']}>
-            <input
-              className={s.field}
-              type="checkbox"
-              checked={checked}
-              onChange={handleToggle}
-            />
+          <button className={s.button} type="button" onClick={handleToggle}>
             <svg
-              className={`${s.icon} ${checked ? s.checked : ''}`}
+              className={`${s.icon} ${focus ? s.focus : ''}`}
               width="16"
               height="16"
             >
               <use href="/icons.svg#icon-heart"></use>
             </svg>
-          </label>
+          </button>
         </div>
         <div className={s['car-info']}>
           <div className={s['title-container']}>
@@ -46,16 +45,14 @@ const CarItem = ({ car }) => {
             <span className={s.rentalPrice}>${car.rentalPrice}</span>
           </div>
           <ul className={s['info-list']}>
-            <li>
-              {car.address.split(' ').slice(3).join(' | ').replace(',', '')} |
-            </li>
-            <li>&nbsp;{car.rentalCompany} |</li>
+            <li>{formattedCity}</li>
+            <li>{formattedCountry}</li>
+            <li>{car.rentalCompany}</li>
           </ul>
-          <ul className={s['info-list']}>
-            <li>&nbsp;{car.type} |</li>
+          <ul className={`${s['info-list']} ${s['model-list']}`}>
+            <li>{car.type}</li>
             <li>
-              &nbsp;
-              {`${String(car.mileage)[0]} ${String(car.mileage).slice(1)}`}{' '}
+              {`${String(car.mileage)[0]} ${String(car.mileage).slice(1)} km`}
             </li>
           </ul>
         </div>

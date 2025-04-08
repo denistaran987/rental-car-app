@@ -1,17 +1,18 @@
-:global(.ant-form-item-label label) {
-  font-size: 12px !important;
-  font-family: var(--font-family) !important;
-  font-weight: 400 !important;
-  line-height: 1.3 !important;
-  color: var(--gray) !important;
-}
-
+:global(.ant-select-single .ant-select-selector),
 :global(.ant-select .ant-select-selection-placeholder) {
-  font-family: var(--font-family) !important;
+  font-family: var(--font-family-main) !important;
   font-weight: 500 !important;
   font-size: 16px !important;
   line-height: 1.25 !important;
   color: var(--main) !important;
+}
+
+:global(.ant-form-item-label label) {
+  font-size: 12px !important;
+  font-family: var(--font-family-main) !important;
+  font-weight: 400 !important;
+  line-height: 1.3 !important;
+  color: var(--gray) !important;
 }
 
 :global(.ant-select-selector) {
@@ -68,7 +69,7 @@ svg {
 }
 
 .field {
-  font-family: var(--font-family);
+  font-family: var(--font-family-main);
   font-weight: 500;
   font-size: 16px;
   line-height: 1.25;
@@ -101,7 +102,7 @@ svg {
   position: absolute;
   top: 50%;
   left: 14px;
-  font-family: var(--font-family);
+  font-family: var(--font-family-main);
   font-weight: 500;
   font-size: 16px;
   line-height: 1.25;

@@ -47,8 +47,7 @@
   height: var(--button-height);
 }
 
-.button:hover,
-.button:focus {
+.button:hover {
   background-color: var(--button);
   color: var(--white);
 }

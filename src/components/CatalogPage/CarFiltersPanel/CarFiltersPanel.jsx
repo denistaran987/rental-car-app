@@ -17,16 +17,16 @@ const { Option } = Select;
 
 const CarFiltersPanel = () => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [openBrand, setOpenBrand] = useState(false);
   const [openPrice, setOpenPrice] = useState(false);
-  const dispatch = useDispatch();
+  const [minMileage, setMinMileage] = useState('');
+  const [maxMileage, setMaxMileage] = useState('');
   const isLoading = useSelector(selectIsLoading);
   const { carsBrandList } = useSelector(selectCarsInfo);
   const currentFilters = useSelector(selectCarsFilters);
   const carsPriceList = [30, 40, 50, 60, 70, 80];
-  const [minMileage, setMinMileage] = useState('');
-  const [maxMileage, setMaxMileage] = useState('');
 
   useEffect(() => {
     const initialValues = {
@@ -44,20 +44,41 @@ const CarFiltersPanel = () => {
         currentFilters.maxMileage ||
         undefined,
     };
+
+    setMinMileage(initialValues.minMileage || '');
+    setMaxMileage(initialValues.maxMileage || '');
+
     form.setFieldsValue(initialValues);
   }, [form, currentFilters, searchParams]);
 
   const handleSubmit = values => {
+    const formattedRentalPrice = values.rentalPrice
+      ? values.rentalPrice.slice(4)
+      : undefined;
+
+    const formattedValues = {
+      brand: values.brand,
+      rentalPrice: formattedRentalPrice,
+      minMileage: values.minMileage,
+      maxMileage: values.maxMileage,
+    };
+
     try {
       const newSearchParams = new URLSearchParams();
       Object.entries(values).forEach(([key, value]) => {
         if (value) newSearchParams.set(key, value);
       });
+
       setSearchParams(newSearchParams);
 
       dispatch(resetCarsState());
-      dispatch(setFilters(values));
-      dispatch(fetchCarsData({ page: '1', filters: values }));
+      dispatch(setFilters(formattedValues));
+      dispatch(
+        fetchCarsData({
+          page: '1',
+          filters: formattedValues,
+        })
+      );
     } catch (error) {
       console.log(error);
     }
@@ -107,10 +128,15 @@ const CarFiltersPanel = () => {
                 <use href="/icons.svg#icon-arrow"></use>
               </svg>
             }
+            optionLabelProp="label"
           >
             {carsPriceList &&
               carsPriceList.map(option => (
-                <Option key={option} value={option}>
+                <Option
+                  key={option}
+                  value={`To $${option}`}
+                  label={`To $${option}`}
+                >
                   {option}
                 </Option>
               ))}
@@ -126,6 +152,7 @@ const CarFiltersPanel = () => {
                 min={0}
                 className={clsx(s.field, s['field_from'])}
                 value={minMileage}
+                allowClear
                 onChange={e => {
                   const raw = e.target.value.replace(/,/g, '');
                   if (raw === '') {
@@ -148,6 +175,7 @@ const CarFiltersPanel = () => {
                 min={0}
                 className={clsx(s.field, s['field_to'])}
                 value={maxMileage}
+                allowClear
                 onChange={e => {
                   const raw = e.target.value.replace(/,/g, '');
                   if (raw === '') {
